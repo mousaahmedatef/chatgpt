@@ -1,6 +1,17 @@
-public async Task<IEnumerable<KeyValuePair<int, string>>> FindByConditionWithSelect(Expression<Func<TEntity, bool>> expression, Expression<Func<TEntity, object>> selectExpression)
+private async Task<IEnumerable<PollVote>> PollVotesWithOutSideEntityName(IEnumerable<PollVote> pollVotes )
 {
-    return await context.Set<TEntity>().AsNoTracking().Where(expression).Select(selectExpression).ToListAsync();
-}
+    var pollVotesIds = pollVotes.Select(i => i.Id).ToList();
 
-update tis to return key value pair
+    var outsideEntities = await _outsideEntity.FindByConditionWithSelect(i => pollVotesIds.Contains(i.Id), i => new KeyValuePair <int,string> ( i.Id, i.Name ));
+
+    foreach (var pollVote in pollVotes)
+    {
+        var outsideEntity = outsideEntities.FirstOrDefault(e => e.Id ==  pollVote.FkOutsideEntityId);
+        if (outsideEntity != null)
+        {
+            pollVote.OutsideEntity.Name = outsideEntity.Name;
+        }
+    }
+
+    return pollVotes;
+}
