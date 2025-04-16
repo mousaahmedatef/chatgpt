@@ -1,14 +1,12 @@
-  [HttpPost]
-  public virtual async Task<IActionResult> Post([FromBody] TDto dto)
-  {
-      if (dto == null)
-      { 
-          return BadRequest("DTO cannot be null");
-      }
-
-      var createdDto = await _service.AddAsync(dto);
-      
-      return Ok(createdDto);
-  }
-
-  are this method body type is json or From-Data in .net
+ public async Task<IEnumerable<TEntity>> GetWithIncludesAndCondition(Expression<Func<TEntity, bool>>? condition = null, params Expression<Func<TEntity, object>>[] includes)
+ {
+     IQueryable<TEntity> query = context.Set<TEntity>();
+     foreach (var include in includes)
+     {
+         query = query.Include(include);
+     }
+     if (condition is not null)
+         return await query.Where(condition).ToListAsync();
+     else
+         return await query.ToListAsync();
+ }
