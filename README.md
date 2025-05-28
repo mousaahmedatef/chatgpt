@@ -44,3 +44,12 @@ sortBy(column: 'requestDate' | 'statusName' | 'entityName'): void {
 <span *ngIf="sortColumn === 'requestDate'">
           {{ sortDirection === 'asc' ? '↑' : '↓' }}
         </span>
+
+if (this.sortColumn === column && this.sortedList === listName) {
+    this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+  } else {
+    this.sortColumn = column;
+    this.sortDirection = 'asc';
+    this.sortedList = listName;
+  }
+        
