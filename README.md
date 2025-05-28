@@ -39,3 +39,12 @@ sortBy(column: string): void {
     return 0;
   });
 }
+
+
+but this lines
+let aVal = a[column];
+      let bVal = b[column];
+      
+shows this error
+Element implicitly has an 'any' type because expression of type 'string' can't be used to index type 'IncidentTaskRequest'.
+  No index signature with a parameter of type 'string' was found on type 'IncidentTaskRequest'
