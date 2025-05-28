@@ -1,7 +1,4 @@
-sortColumn: string = '';
-sortDirection: 'asc' | 'desc' | '' = '';
-
-sortBy(column: string): void {
+sortBy(column: 'requestDate' | 'statusName' | 'entityName'): void {
   if (this.sortColumn === column) {
     this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
   } else {
@@ -10,28 +7,30 @@ sortBy(column: string): void {
   }
 
   this.informationList.sort((a, b) => {
-    let aVal = a[column];
-    let bVal = b[column];
+    let aVal: any;
+    let bVal: any;
 
-    // Special rule for 'entityName'
-    if (column === 'entityName') {
-      const specialValues = ['multiple', 'zero'];
-      const isASpecial = specialValues.includes((aVal || '').toLowerCase());
-      const isBSpecial = specialValues.includes((bVal || '').toLowerCase());
+    switch (column) {
+      case 'requestDate':
+        aVal = new Date(a.requestDate);
+        bVal = new Date(b.requestDate);
+        break;
+      case 'statusName':
+        aVal = (a.statusName || '').toLowerCase();
+        bVal = (b.statusName || '').toLowerCase();
+        break;
+      case 'entityName':
+        aVal = (a.entityName || '').toLowerCase();
+        bVal = (b.entityName || '').toLowerCase();
 
-      if (isASpecial && !isBSpecial) return 1;
-      if (!isASpecial && isBSpecial) return -1;
-      if (isASpecial && isBSpecial) return 0;
-    }
+        const specialValues = ['multiple', 'zero'];
+        const isASpecial = specialValues.includes(aVal);
+        const isBSpecial = specialValues.includes(bVal);
 
-    // Handle requestDate as Date
-    if (column === 'requestDate') {
-      aVal = new Date(aVal);
-      bVal = new Date(bVal);
-    } else {
-      // Handle statusName, entityName as lowercase string
-      aVal = (aVal || '').toString().toLowerCase();
-      bVal = (bVal || '').toString().toLowerCase();
+        if (isASpecial && !isBSpecial) return 1;
+        if (!isASpecial && isBSpecial) return -1;
+        if (isASpecial && isBSpecial) return 0;
+        break;
     }
 
     if (aVal < bVal) return this.sortDirection === 'asc' ? -1 : 1;
@@ -39,12 +38,3 @@ sortBy(column: string): void {
     return 0;
   });
 }
-
-
-but this lines
-let aVal = a[column];
-      let bVal = b[column];
-      
-shows this error
-Element implicitly has an 'any' type because expression of type 'string' can't be used to index type 'IncidentTaskRequest'.
-  No index signature with a parameter of type 'string' was found on type 'IncidentTaskRequest'
