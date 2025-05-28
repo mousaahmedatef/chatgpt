@@ -38,3 +38,9 @@ sortBy(column: 'requestDate' | 'statusName' | 'entityName'): void {
     return 0;
   });
 }
+
+
+
+<span *ngIf="sortColumn === 'requestDate'">
+          {{ sortDirection === 'asc' ? '↑' : '↓' }}
+        </span>
