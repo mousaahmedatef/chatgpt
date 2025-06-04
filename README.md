@@ -1,5 +1,29 @@
         public static string GetTemplateWithoutTable(string title ,string? url)
         {
+            var buttonHTML="";
+			if (url != null)
+			{
+                buttonHTML = @$"
+		<tr>
+		<td align=""center"" valign=""top"" style=""border-collapse: collapse; border-spacing: 0; margin: 0; padding: 0; padding-left: 6.25%; padding-right: 6.25%; width: 87.5%;
+			padding-top: 25px;
+			padding-bottom: 5px;"" class=""button"">
+			<a
+			href=""{url}"" target=""_blank"" style=""text-decoration: underline;"">
+				<table border=""0"" cellpadding=""0"" cellspacing=""0"" align=""center"" style=""max-width: 240px; min-width: 120px; border-collapse: collapse; border-spacing: 0; padding: 0;"">
+				<tr>
+				<td align=""center"" valign=""middle"" style=""padding: 12px 24px; margin: 0; text-decoration: underline; border-collapse: collapse; border-spacing: 0; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px;""
+					bgcolor=""#E9703E"">
+					<a target=""_blank"" style=""text-decoration: underline;
+					color: #FFFFFF; font-family: sans-serif; font-size: 17px; font-weight: 400; line-height: 120%;""
+					href=""{url}"">
+						فتح البلاغ
+					</a>
+			</td></tr></table></a>
+		</td>
+		</tr>
+			";
+            }
             var html = @$"
 <!doctype html>
 <html>
@@ -94,18 +118,8 @@ a, a:hover {{
 		</td>
 	</tr>
 
-	<tr>
-		<td align=""center"" valign=""top"" style=""border-collapse: collapse; border-spacing: 0; margin: 0; padding: 0; padding-left: 6.25%; padding-right: 6.25%; width: 87.5%;
-			padding-top: 25px;
-			padding-bottom: 5px;"" class=""button""><a
-			href=""{url}"" target=""_blank"" style=""text-decoration: underline;"">
-				<table border=""0"" cellpadding=""0"" cellspacing=""0"" align=""center"" style=""max-width: 240px; min-width: 120px; border-collapse: collapse; border-spacing: 0; padding: 0;""><tr><td align=""center"" valign=""middle"" style=""padding: 12px 24px; margin: 0; text-decoration: underline; border-collapse: collapse; border-spacing: 0; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px;""
-					bgcolor=""#E9703E""><a target=""_blank"" style=""text-decoration: underline;
-					color: #FFFFFF; font-family: sans-serif; font-size: 17px; font-weight: 400; line-height: 120%;""
-					href=""{url}"">
-						فتح البلاغ
-					</a>
-			</td></tr>
+	<!-- BUTTON -->
+	{buttonHTML}
 
 	<!-- HERO IMAGE -->
 	<!-- Image text color should be opposite to background color. Set your url, image src, alt and title. Alt text should fit the image size. Real image size should be x2 (wrapper x2). Do not set height for flexible images (including ""auto""). URL format: http://domain.com/?utm_source={{{{Campaign-Source}}}}&utm_medium=email&utm_content={{{{Ìmage-Name}}}}&utm_campaign={{{{Campaign-Name}}}} -->
@@ -125,3 +139,5 @@ a, a:hover {{
 ";
             return html;
         }
+
+ is this will return a valid template or will there be a missing tag?
