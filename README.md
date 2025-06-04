@@ -139,5 +139,3 @@ a, a:hover {{
 ";
             return html;
         }
-
- is this will return a valid template or will there be a missing tag?
